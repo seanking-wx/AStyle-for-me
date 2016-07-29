@@ -8,7 +8,7 @@ namespace AStyle
 {
 // build a vector of argv options
 // the program path argv[0] is excluded
-void ASConsole::GetArgvOptions(int argc, _TCHAR* argv[], vector<string>& listOptions) const
+void ASConsole::GetArgvOptions(int argc, _TCHAR* argv[], vector<string> &listOptions) const
 {
 	listOptions.clear();
 	for(int i = 1; i < argc; i++)

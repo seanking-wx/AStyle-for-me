@@ -467,9 +467,13 @@ void ASOptions::ParseOption(const string &arg, const string &errorInfo)
 	else if(IsOption2(arg, "q", "quiet"))
 		m_Console.setIsQuiet(true);
 	else if(IsOption2(arg, "i", "ignore-exclude-errors"))
-		m_Console.setIgnoreExcludeErrors(true);
+		m_Console.SetIgnoreExcludeErrors(true);
 	else if(IsOption2(arg, "xi", "ignore-exclude-errors-x"))
-		m_Console.setIgnoreExcludeErrorsAndDisplay(true);
+		m_Console.SetIgnoreExcludeErrorsAndDisplay(true);
+	else if(IsOption(arg, "ignore-empty-errors"))
+		m_Console.SetIgnoreEmptyErrors(true);
+	else if(IsOption(arg, "ignore-empty-errors-x"))
+		m_Console.SetIgnoreEmptyErrorsAndDisplay(true);
 	else if(IsOption2(arg, "X", "errors-to-stdout"))
 		m_Console.SetErrorOut(&cout);
 	else

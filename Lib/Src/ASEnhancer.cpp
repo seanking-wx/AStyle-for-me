@@ -9,7 +9,7 @@ namespace AStyle
  * init() is called each time an ASFormatter object is initialized.
  */
 void ASEnhancer::init(int  _fileType,
-					int  _indentLength,
+					  int  _indentLength,
 					  int  _tabLength,
 					  bool _useTabs,
 					  bool _forceTab,

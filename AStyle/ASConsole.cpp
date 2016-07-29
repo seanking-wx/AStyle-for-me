@@ -19,8 +19,10 @@ ASConsole::ASConsole(void) : m_lpErrorOut(&cerr)
 	preserveDate = false;
 	isQuiet = false;
 	isFormattedOnly = false;
-	ignoreExcludeErrors = false;
-	ignoreExcludeErrorsDisplay = false;
+	m_bIgnoreExcludeErrors = false;
+	m_bIgnoreExcludeErrorsDisplay = false;
+	m_bIgnoreEmptyErrors = false;
+	m_bIgnoreEmptyErrorsDisplay = false;
 	useAscii = false;
 	// other variables
 	bypassBrowserOpen = false;
@@ -43,7 +45,7 @@ int ASConsole::DoMain(int argc, _TCHAR* argv[])
 	vector<string> listOptions;
 	GetArgvOptions(argc, argv,listOptions);
 	ProcessOptions(listOptions);
-	if(m_listInputFilePaths.empty())			// if no files have been given, use cin for input and cout for output
+	if(m_listInputFilePaths.empty())            // if no files have been given, use cin for input and cout for output
 		formatCinToCout();
 	else                                    // else process entries in the fileNameVector
 		ProcessFiles();
@@ -336,18 +338,6 @@ int ASConsole::getFilesFormatted() const
 }
 
 // for unit testing
-bool ASConsole::getIgnoreExcludeErrors() const
-{
-	return ignoreExcludeErrors;
-}
-
-// for unit testing
-bool ASConsole::getIgnoreExcludeErrorsDisplay() const
-{
-	return ignoreExcludeErrorsDisplay;
-}
-
-// for unit testing
 bool ASConsole::getIsDryRun() const
 {
 	return isDryRun;
@@ -465,17 +455,6 @@ FileEncoding ASConsole::readFile(const string &fileName_, stringstream &in) cons
 	fin.close();
 	delete [] data;
 	return encoding;
-}
-
-void ASConsole::setIgnoreExcludeErrors(bool state)
-{
-	ignoreExcludeErrors = state;
-}
-
-void ASConsole::setIgnoreExcludeErrorsAndDisplay(bool state)
-{
-	ignoreExcludeErrors = state;
-	ignoreExcludeErrorsDisplay = state;
 }
 
 void ASConsole::setIsFormattedOnly(bool state)

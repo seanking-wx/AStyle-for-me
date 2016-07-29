@@ -9,7 +9,7 @@ namespace AStyle
 void ASConsole::ProcessFiles()
 {
 	clock_t startTime=0;
-	if(getIsVerbose())
+	if(GetIsVerbose())
 		startTime = PrintVerboseHeader();
 	// loop thru input fileNameVector and process the files
 	for(size_t i = 0; i < m_listInputFilePaths.size(); i++)
@@ -20,7 +20,7 @@ void ASConsole::ProcessFiles()
 			formatFile(fileName[j]);
 	}
 	// files are processed, display stats
-	if(getIsVerbose())
+	if(GetIsVerbose())
 		PrintVerboseStats(startTime);
 }
 
@@ -159,36 +159,37 @@ void ASConsole::ProcessInputFilePaths(string &filePath)
 		if(excludeHitsVector[ix] == false)
 		{
 			excludeErr = true;
-			if(!ignoreExcludeErrorsDisplay)
-			{
-				if(ignoreExcludeErrors)
-					printMsg(_("Exclude (unmatched)  %s\n"), m_listExclude[ix]);
-				else
-					fprintf(stderr, _("Exclude (unmatched)  %s\n"), m_listExclude[ix].c_str());
-			}
-			else
-			{
-				if(!ignoreExcludeErrors)
-					fprintf(stderr, _("Exclude (unmatched)  %s\n"), m_listExclude[ix].c_str());
-			}
+			if(!m_bIgnoreExcludeErrors)
+				fprintf(stderr, _("Exclude (unmatched)  %s\n"), m_listExclude[ix].c_str());
+			else if(!m_bIgnoreExcludeErrorsDisplay)
+				printMsg(_("Exclude (unmatched)  %s\n"), m_listExclude[ix]);
 		}
 	}
-	if(excludeErr && !ignoreExcludeErrors)
+	if(excludeErr && !m_bIgnoreExcludeErrors)
 	{
-		if(hasWildcard && !isRecursive)
-			fprintf(stderr, "%s\n", _("Did you intend to use --recursive"));
-		error();
-	}
-	// check if files were found (probably an input error if not)
-	if(fileName.empty())
-	{
-		fprintf(stderr, _("No file to process %s\n"), filePath.c_str());
 		if(hasWildcard && !isRecursive)
 			fprintf(stderr, "%s\n", _("Did you intend to use --recursive"));
 		error();
 	}
 	if(hasWildcard)
 		PrintSeparatingLine();
+	// check if files were found (probably an input error if not)
+	if(fileName.empty())
+	{
+		if(!m_bIgnoreEmptyErrors)
+		{
+			fprintf(stderr, _("No file to process %s\n"), filePath.c_str());
+			if(hasWildcard && !isRecursive)
+				fprintf(stderr, "%s\n", _("Did you intend to use --recursive"));
+			error();
+		}
+		else if(!m_bIgnoreEmptyErrorsDisplay)
+		{
+			printMsg(_("No file to process %s\n"), filePath.c_str());
+			if(hasWildcard && !isRecursive)
+				printMsg("%s\n", _("Did you intend to use --recursive"));
+		}
+	}
 }
 
 // compare a path to the exclude vector

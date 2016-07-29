@@ -14,7 +14,7 @@
 #include "ASLocalizer.h"
 #include <tchar.h>
 
-#define _(a)	m_localizer.settext(a)
+#define _(a)    m_localizer.settext(a)
 
 #define __UNIT_TEST__
 
@@ -42,18 +42,34 @@ class ASConsole
 		{
 			m_lpErrorOut = lpOut;
 		}
-		void SetExcludeVector(string suffixParam, bool bFnD);
 		void SetIsVerbose(bool state)
 		{
 			m_bIsVerbose = state;
 		}
+		void SetIgnoreExcludeErrors(bool state)
+		{
+			m_bIgnoreExcludeErrors = state;
+		}
+		void SetIgnoreExcludeErrorsAndDisplay(bool state)
+		{
+			m_bIgnoreExcludeErrors = state;
+			m_bIgnoreExcludeErrorsDisplay = state;
+		}
+		void SetIgnoreEmptyErrors(bool state)
+		{
+			m_bIgnoreEmptyErrors = state;
+		}
+		void SetIgnoreEmptyErrorsAndDisplay(bool state)
+		{
+			m_bIgnoreEmptyErrors = state;
+			m_bIgnoreEmptyErrorsDisplay = state;
+		}
+		void SetExcludeVector(string suffixParam, bool bFnD);
 
 		void convertLineEnds(ostringstream &out, int lineEnd);
 		FileEncoding detectEncoding(const char* data, size_t dataSize) const;
 		bool getFilesAreIdentical() const;
 		int  getFilesFormatted() const;
-		bool getIgnoreExcludeErrors() const;
-		bool getIgnoreExcludeErrorsDisplay() const;
 		bool getIsDryRun() const;
 		bool getIsFormattedOnly() const;
 		bool getIsQuiet() const;
@@ -62,15 +78,31 @@ class ASConsole
 		bool getNoBackup() const;
 		bool getPreserveDate() const;
 
-		//单元测试用函数
+		bool GetIsVerbose() const
+		{
+			return m_bIsVerbose;
+		}
 #ifdef __UNIT_TEST__
-		string getLanguageID() const
+		//单元测试用函数
+		string GetLanguageID() const
 		{
 			return m_localizer.getLanguageID();
 		}
-		bool getIsVerbose() const
+		bool GetIgnoreExcludeErrors() const
 		{
-			return m_bIsVerbose;
+			return m_bIgnoreExcludeErrors;
+		}
+		bool GetIgnoreExcludeErrorsDisplay() const
+		{
+			return m_bIgnoreExcludeErrorsDisplay;
+		}
+		bool GetIgnoreEmptyErrors() const
+		{
+			return m_bIgnoreEmptyErrors;
+		}
+		bool GetIgnoreEmptyErrorsDisplay() const
+		{
+			return m_bIgnoreEmptyErrorsDisplay;
 		}
 
 		vector<string> getFileName() const
@@ -101,8 +133,6 @@ class ASConsole
 		string getNumberFormat(int num, const char* groupingArg, const char* separator) const;
 		string getOrigSuffix() const;
 		void setBypassBrowserOpen(bool state);
-		void setIgnoreExcludeErrors(bool state);
-		void setIgnoreExcludeErrorsAndDisplay(bool state);
 		void setIsDryRun(bool state);
 		void setIsFormattedOnly(bool state);
 		void setNoBackup(bool state);
@@ -129,7 +159,7 @@ class ASConsole
 		int WildCmp(const char* wild, const char* data) const;
 
 		//参数解析用函数
-		void GetArgvOptions(int argc, _TCHAR* argv[], vector<string>& listOptions) const;
+		void GetArgvOptions(int argc, _TCHAR* argv[], vector<string> &listOptions) const;
 		void ProcessOptions(vector<string> &argvOptions);
 		//参数文件相关接口
 		const char* GetOptionsFileName() const
@@ -184,7 +214,7 @@ class ASConsole
 		Utf8_16 utf8_16;                    // utf8/16 conversion methods
 
 		vector<string> m_listExclude;       // 需要排除的目录名和后缀列表
-		vector<bool> m_listExcludeFnD;		// 排除项为目录或者文件名标记列表
+		vector<bool> m_listExcludeFnD;      // 排除项为目录或者文件名标记列表
 		vector<bool> excludeHitsVector;     // exclude flags for error reporting
 		vector<string> m_listInputFilePaths; // 命令行输入文件路径列表
 		vector<string> fileName;            // files to be processed including path
@@ -199,8 +229,10 @@ class ASConsole
 		bool preserveDate;                  // preserve-date option
 		bool isQuiet;                       // quiet option
 		bool isFormattedOnly;               // formatted lines only option
-		bool ignoreExcludeErrors;           // don't abort on unmatched excludes
-		bool ignoreExcludeErrorsDisplay;    // don't display unmatched excludes
+		bool m_bIgnoreExcludeErrors;        // 出现忽略项不中断处理过程
+		bool m_bIgnoreExcludeErrorsDisplay; // 出现忽略项不中断处理过程并且无提示信息
+		bool m_bIgnoreEmptyErrors;          // 出现无匹配项不中断处理过程
+		bool m_bIgnoreEmptyErrorsDisplay;   // 出现无匹配项不中断处理过程并且无提示信息
 		bool useAscii;                      // ascii option
 
 		//其他变量
