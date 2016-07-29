@@ -1,0 +1,140 @@
+# 命令行专用参数
+#不使用默认参数文件，默认配置文件可由环境变量 ARTISTIC_STYLE_OPTIONS 指定
+#-?		#-h		#--help 				# 显示使用帮助
+#-!		#--html							# 显示html版本帮助文件
+#--html="D:\AStyle\doc\astyle.html"		# 显示指定的html文件
+#-v		#--version						# 显示版本号
+#-I		#--ascii						# 输出信息强制为英文输出
+#--options=none							# 不使用配置文件
+#--options="D:\AStyle\bin\astylerc"		# 使用指定路径的配置文件
+
+# {} 样式选择
+-A1		#--style=allman		#--style=bsd		#--style=break
+#-A2	#--style=java		#--style=attach
+#-A3	#--style=kr			#--style="k&r"		#--style=k/r
+#-A4	#--style=stroustrup	
+#-A5	#--style=whitesmith
+#-A6	#--style=banner
+#-A7	#--style=gnu
+#-A8	#--style=linux		#--style=knf
+#-A9	#--style=horstmann
+#-A10	#--style=1tbs		#--style=otbs
+#-A11	#--style=pico
+#-A12	#--style=lisp		#--style=python
+#-A14	#--style=google
+#-A15	#--style=vtk
+
+# {} 变更选项
+#-xn	#--attach-namespaces
+#-xc	#--attach-classes
+#-xl	#--attach-inlines
+#-xk	#--attach-extern-c
+
+# 缩进样式选择
+#-s		#--indent=spaces			#tab用4个空格代替
+#-s4	#--indent=spaces=4			#tab用n个空格代替 n = [2,20], 默认为4
+#-t		#--indent=tab				#假设tab占据4个空格
+#-t4	#--indent=tab=4				#假设tab占据n个空格 n = [2,20], 默认为4
+-T		#--indent=force-tab			#假设tab占据4个空格
+#-T4	#--indent=force-tab=4		#假设tab占据n个空格 n = [2,20], 默认为4
+#-xT	#--indent=force-tab-x
+#-xT4	#--indent=force-tab-x=4
+
+# 缩进参数
+-C		#--indent-classes
+#-xG	#--indent-modifiers
+-S		#--indent-switches
+#-K		#--indent-cases
+#-N		#--indent-namespaces
+#-L		#--indent-labels
+-xW		#--indent-preproc-block
+-w		#--indent-preproc-define
+#-xw	#--indent-preproc-cond
+-Y		#--indent-col1-comments
+-m0		#--min-conditional-indent=0		#n = [0,3]
+-M40	#--max-instatement-indent=40	#n <= 120
+
+# 填充参数
+#-f		#--break-blocks
+#-F		#--break-blocks=all
+#-p		#--pad-oper
+#-P		#--pad-paren
+#-d		#--pad-paren-out
+#-xd	#--pad-first-paren-out
+#-D		#--pad-paren-in
+#-H		#--pad-header
+-U		#--unpad-paren
+-xe		#--delete-empty-lines
+#-E		#--fill-empty-lines
+-k1		#--align-pointer=type
+#-k2	#--align-pointer=middle
+#-k3	#--align-pointer=name
+#-W0	#--align-reference=none
+#-W1	#--align-reference=type
+#-W2	#--align-reference=middle
+-W3		#--align-reference=name
+ 
+# 格式参数
+#-y			#--break-closing-brackets
+#-e			#--break-elseifs
+
+#-j			#--add-brackets
+#-J			#--add-one-line-brackets
+-xj			#--remove-brackets
+
+#-O			#--keep-one-line-blocks
+#-o			#--keep-one-line-statements
+
+-c			#--convert-tabs
+
+#-xy		#--close-templates
+#-xp		#--remove-comment-prefix
+
+-xC150		#--max-code-length=150	#自动换行最大长度 n = [50, 200]
+#-xL		#--break-after-logical
+
+#文件类型默认按照后缀处理 
+#--mode=c
+#--mode=cs
+#--mode=java
+
+# Objective-C 参数
+-xM			#--align-method-colon
+
+-xQ			#--pad-method-prefix
+#-xR		#--unpad-method-prefix
+
+#-xP0	#--pad-method-colon=none
+#-xP1	#--pad-method-colon=all
+-xP2	#--pad-method-colon=after
+#-xP3	#--pad-method-colon=before
+ 
+# 其它参数
+-n		#--suffix=none			#不生成备份文件
+#--suffix=.back					#生成.back后缀的备份文件
+
+#-R		#-r		#--recursive	#子目录递归
+
+#--dry-run
+
+--exclude="Debug"				#排除指定目录
+
+--exclude-name="*.sln"		#排除指定后缀
+--exclude-name="*.vcxproj"
+
+-i		#--ignore-exclude-errors
+#-xi	#--ignore-exclude-errors-x
+--ignore-empty-errors
+#--ignore-empty-errors-x
+#-X		#--errors-to-stdout
+
+#-Z		#--preserve-date
+
+-v		#--verbose
+#-Q		#--formatted
+#-q		#--quiet
+
+#换行符号定义，默认为保留源文件换行符
+-z1		#--lineend=windows
+#-z2	#--lineend=linux
+#-z3	#--lineend=macold
