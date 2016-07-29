@@ -498,12 +498,14 @@ void ASOptions::ImportOptions(istream &in, vector<string> &optionsVector)
 				break;
 			// treat '#' as line comments
 			if(ch == '#')
+			{
 				while(in)
 				{
 					in.get(ch);
 					if(ch == '\n' || ch == '\r')
 						break;
 				}
+			}
 			// break options on new-lines, tabs, commas, or spaces
 			// remove quotes from output
 			if(in.eof() || ch == '\n' || ch == '\r' || ch == '\t' || ch == ',')
